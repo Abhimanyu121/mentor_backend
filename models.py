@@ -2,54 +2,54 @@ from app import db
 
 class Credentials(db.Model):
 	__tablename__ = 'credentials'
-	email = db.column(db.String(), primary_key = True)
-	password = db.column(db.String())
+	email = db.Column(db.String(),primary_key=True)
+	password = db.Column(db.String())
 	def __repr__(self):
 		return '<Email %r>' % self.email
 	def __init__(self, email, password):
 		self.email = email
 		self.password = password
 
-class Profile(db.model):
+class Profile(db.Model):
 	__tablename__ = 'profile'
-	email = db.column(db.String(), primary_key = True)
-	college = db.column(db.String())
-	interest = db.column(db.String())
-	gender = db.column(db.String())
-	location = db.column(db.String())
+	email = db.Column(db.String(), primary_key = True)
+	college = db.Column(db.String())
+	interest = db.Column(db.String())
+	gender = db.Column(db.String())
+	location = db.Column(db.String())
 	def __repr__(self):
 		return '<Email %r>' % self.email
 
 
 
-class Topics(db.model):
+class Topics(db.Model):
 	__tablename__ = 'topics'
-	name = db.column(db.String(), primary_key = True)
+	name = db.Column(db.String(), primary_key = True)
 
-class Mentor_list(db.model):
+class Mentor_list(db.Model):
 	__tablename__ = 'mentor_list'
-	name = db.column(db.String(), ForeignKey('topics.name'))
-	email = db.column(db.String(), ForeignKey('profile.email'))
+	name = db.Column(db.String(), ForeignKey('topics.name'))
+	email = db.Column(db.String(), ForeignKey('profile.email'))
 	profile = relationship("Profile", backref=backref("profile", uselist=False))
 	topics = relationship("Topics", backref=backref("topics", uselist=False))
 
-class Timeline(db.model):
+class Timeline(db.Model):
 	__tablename__ = 'timeline'
-	name = db.column(db.String(), ForeignKey('topics.name'))
-	day = db.column(db.String())
-	goal = db.column(db.String())
+	name = db.Column(db.String(), ForeignKey('topics.name'))
+	day = db.Column(db.String())
+	goal = db.Column(db.String())
 
-class Enrollment(db.model):
+class Enrollment(db.Model):
 	__tablename__ = 'enrollment'
-	topic_name = db.column(db.String(), ForeignKey('topics.name'))
-	mentor = db.column(db.String(), ForeignKey('profile.email'))
-	mentee = email = db.column(db.String(), ForeignKey('profile.email'))
+	topic_name = db.Column(db.String(), ForeignKey('topics.name'))
+	mentor = db.Column(db.String(), ForeignKey('profile.email'))
+	mentee = email = db.Column(db.String(), ForeignKey('profile.email'))
 	profile = relationship("Profile", backref=backref("profile", uselist=False))
 	topics = relationship("Topics", backref=backref("topics", uselist=False))
 
-class Notification(db.model):
+class Notification(db.Model):
 	__tablename__ = 'notification'
-	mentee = db.column(db.String(), ForeignKey('profile.email'))
-	mentor = db.column(db.String(), ForeignKey('profile.email'))
-	request = db.column(db.Boolean)
-	number = db.column(db.Integer, Sequence(increment=1),primary_key=True)
+	mentee = db.Column(db.String(), ForeignKey('profile.email'))
+	mentor = db.Column(db.String(), ForeignKey('profile.email'))
+	request = db.Column(db.Boolean)
+	number = db.Column(db.Integer, Sequence(increment=1),primary_key=True)
