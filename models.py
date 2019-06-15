@@ -6,10 +6,9 @@ class Credentials(db.Model):
 	password = db.column(db.String())
 	def __repr__(self):
 		return '<Email %r>' % self.email
-
-    def __init__(self, email, password ):
-        self.email = email
-        self.password = password
+	def __init__(self, email, password):
+    	self.email = email
+    	self.password = password
 
 class Profile(db.model):
 	__tablename__ = 'profile'

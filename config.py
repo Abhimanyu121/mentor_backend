@@ -1,15 +1,15 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 class Config(object):
-    DEBUG = False
-    TESTING = False
+    DEBUG = True
+    TESTING = True
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///mentor.db'
+    SQLALCHEMY_DATABASE_URI = "postgresql://localhost/mentors"
 
 
 class ProductionConfig(Config):
-    DEBUG = False
+    DEBUG = True
 
 
 class StagingConfig(Config):
@@ -23,4 +23,4 @@ class DevelopmentConfig(Config):
 
 
 class TestingConfig(Config):
-TESTING = True
+	TESTING = True

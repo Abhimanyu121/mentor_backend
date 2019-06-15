@@ -10,5 +10,5 @@ db = SQLAlchemy(app)
 from models import *
 migrate = Migrate(app, db)
 if __name__ == '__main__':
-app.run()
+	app.run()
 	
