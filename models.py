@@ -2,17 +2,17 @@ from app import db
 
 class Credentials(db.Model):
 	__tablename__ = 'credentials'
-	email = db.column(db.String(), primary_key = true)
+	email = db.column(db.String(), primary_key = True)
 	password = db.column(db.String())
 	def __repr__(self):
 		return '<Email %r>' % self.email
 	def __init__(self, email, password):
-    	self.email = email
-    	self.password = password
+		self.email = email
+		self.password = password
 
 class Profile(db.model):
 	__tablename__ = 'profile'
-	email = db.column(db.String(), primary_key = true)
+	email = db.column(db.String(), primary_key = True)
 	college = db.column(db.String())
 	interest = db.column(db.String())
 	gender = db.column(db.String())
@@ -24,7 +24,7 @@ class Profile(db.model):
 
 class Topics(db.model):
 	__tablename__ = 'topics'
-	name = db.column(db.String(), primary_key = true)
+	name = db.column(db.String(), primary_key = True)
 
 class Mentor_list(db.model):
 	__tablename__ = 'mentor_list'
