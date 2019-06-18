@@ -17,29 +17,21 @@ def ping():
 #register and login
 @app.route("/register",methods=['POST'])
 def register():
-	email = request.args.get('email')
-	password = request.args.get('password')
-	name = request.args.get('name')
-	location = request.args.get('location')
-	gender = request.args.get('gender')
-	interest = request.args.get('interest')
-	college = request.args.get('college')
+	email_ = request.form['email']
+	password_ = request.form['password']
+	name_ = request.form['name']
+	location_ = request.form['location']
+	gender_ = request.form['gender']
+	interest_ = request.form['interest']
+	college_ = request.form['college']
+	print(email_)
+	print(password_)
 	try:
-		credentials = Credentials(
-			email = email,
-			password = password
-		)
-		db.sesssion.add(credentials)
-		db.session.commit()
-		profile = Profile(
-				email = email,
-				name = name,
-				location = location,
-				gender = gender,
-				interest = interest,
-				college = college
-			)
-		db.session.add(profile)
+		credentials = Credentials(email = email_, password = password_)
+		#db.session.add(credentials)
+		#db.session.commit()
+		profile = Profile(email = email_,name = name_,location = location_,gender = gender_,interest = interest_,college = college_)
+		db.session.add(profile,credentials)
 		db.session.commit()
 		return"ok"
 		
@@ -48,8 +40,8 @@ def register():
 
 @app.route("/login")
 def login():
-	email = request.args.get('email')
-	password = request.args.get('password')
+	email = request.form['email']
+	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == credentials['password']:
@@ -63,22 +55,22 @@ def login():
 
 @app.route("/enroll")
 def enroll():
-	email = request.args.get('email')
-	password = request.args.get('password')
+	email = request.form['email']
+	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == credentials['password']:
 			enrollment = Enrollment(
 					mentee = email,
-					mentor = request.args.get('mentor'),
+					mentor = request.form['mentor'],
 					status = False,
-					topic_name = request.args.get('topic_name')
+					topic_name = request.form['topic_name']
 				)
 			notif = Notification(
 					mentee = email,
-					mentor = request.args.get('mentor'),
+					mentor = request.form['mentor'],
 					status = False,
-					topic_name = request.args.get('topic_name')
+					topic_name = request.form['topic_name']
 				)
 			db.session.add(enrollment)
 			db.session.commit()
@@ -92,15 +84,15 @@ def enroll():
 		return False
 @app.route("/add_timeline")
 def add_timeline():
-	email = request.args.get('email')
-	password = request.args.get('password')
+	email = request.form['email']
+	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == credentials['password']:
 			timeline = Timeline(
-					name = request.args.get('name'),
-					day = request.args.get('day'),
-					goal = request.args.get('goal')
+					name = request.form['name'],
+					day = request.form['day'],
+					goal = request.form['goal']
 				)
 			db.session.add(timeline)
 			db.session.commit()
@@ -112,14 +104,14 @@ def add_timeline():
 		return False
 @app.route("/add_mentor")
 def add_mentor():
-	email = request.args.get('email')
-	password = request.args.get('password')
+	email = request.form['email']
+	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == credentials['password']:
 			mentor = Mentor(
-					name = request.args.get('name'),
-					email = request.args.get('email')
+					name = request.form['name'],
+					email = request.form['email']
 				)
 			db.session.add(mentor)
 			db.session.commit()
@@ -131,13 +123,13 @@ def add_mentor():
 		return False
 @app.route("/add_topics")
 def new_topic():
-	email = request.args.get('email')
-	password = request.args.get('password')
+	email = request.form['email']
+	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
-		if password == credentials['password']:
+		if password == credentials.password:
 			topic = Topic(
-					name = request.args.get('name')
+					name = request.form['name']
 				)
 			db.session.add(mentor)
 			db.session.commit()
@@ -151,20 +143,30 @@ def new_topic():
 
 @app.route("/profile")
 def profile():
-	email = request.args.get('email')
-	password = request.args.get('password')
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
-		if password == credentials['password']:
+		if password == str(credentials.password):
 			profile = Profile.query.filter_by(email = email).first()
-			return jsonify(profile.serialize())
-			print (str(profile))
+			print(str(profile))
+			dict={
+					"email": str(profile.email),
+					"name": str(profile.name),
+					"interest": str(profile.interest),
+					"location": str(profile.location),
+					"gender" :str(profile.gender),
+					"college": str(profile.college)
+				}
+			return jsonify(dict)
 		else:
-			return None
+			return "failed"
 	except Exception as e:
 		print(str(e))
-		return None
+		return str(e)
 migrate = Migrate(app, db)
 if __name__ == '__main__':
 	app.run()
-#localhost:5000/register?email=root&password=root&name=qwerty&location='qwerty'&gender=male&interest=qwerty&college=qwerty
+#localhost:5000/register?email="root"&password="root"&name="qwerty"&location="qwerty"&gender="male"&interest="qwerty"&college="qwerty"
+#curl -v -H "Content-Type: application/json" -X POST \ -d '{"email":"root","password":"root","name":"qwerty","location":"qwerty","gender":"male","interest":"qwerty","college":"qwerty"}' http://127.0.0.1:5000/register

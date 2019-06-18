@@ -20,9 +20,9 @@ class Profile(db.Model):
 	gender = db.Column(db.String())
 	location = db.Column(db.String())
 	name = db.Column(db.String())
-	mentors = relationship("Mentor_list", backref="profile", lazy=True)
-	enroll = relationship("Enrollment", backref="profile", lazy=True)
-	notifs = relationship("Notification", backref="profile", lazy=True)
+	#mentors = relationship("Mentor_list"))
+	#enroll = relationship("Enrollment"))
+	#notifs = relationship("Notification"))
 	def __init__(self, email,password):
 		self.email= email
 		self.college = college
@@ -39,17 +39,17 @@ class Profile(db.Model):
 class Topics(db.Model):
 	__tablename__ = 'topics'
 	topic_name = db.Column(db.String(), primary_key = True)
-	mentors = relationship("Mentor_list", backref="profile", lazy=True)
-	time = relationship("Timeline", backref="topics", lazy=True)
-	enroll = relationship("Enrollment", backref="topics", lazy=True)
-	notifs = relationship("Notification", backref="topics", lazy=True)
+	#mentors = relationship("Mentor_list")
+	#time = relationship("Timeline")
+	#enroll = relationship("Enrollment")
+	#notifs = relationship("Notification")
 
 class Mentor_list(db.Model):
 	__tablename__ = 'mentor_list'
 	id = db.Column(db.Integer, primary_key = True)
 	topic_name = db.Column(db.String())
 	email = db.Column(db.String())
-	ForeignKeyConstraint(['email', 'topic_name'], ['profile.email', 'topics.topic_name'])
+	#ForeignKeyConstraint(['email', 'topic_name'], ['profile.email', 'topics.topic_name'])
 
 class Timeline(db.Model):
 	__tablename__ = 'timeline'
@@ -57,7 +57,7 @@ class Timeline(db.Model):
 	topic_name = db.Column(db.String())
 	day = db.Column(db.String())
 	goal = db.Column(db.String())
-	ForeignKeyConstraint(['name'], ['topics.topic_name'])
+	#ForeignKeyConstraint(['name'], ['topics.topic_name'])
 
 class Enrollment(db.Model):
 	__tablename__ = 'enrollment'
@@ -66,7 +66,7 @@ class Enrollment(db.Model):
 	mentor = db.Column(db.String())
 	mentee = db.Column(db.String())
 	status = db.Column(db.Boolean)
-	ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['profile.email', 'profile.email','topics.topic_name'])
+	#ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['profile.email', 'profile.email','topics.topic_name'])
 class Notification(db.Model):
 	__tablename__ = 'notification'
 	id = db.Column(db.Integer, primary_key = True)
@@ -75,4 +75,4 @@ class Notification(db.Model):
 	mentor = db.Column(db.String())
 	request = db.Column(db.Boolean)
 	number = db.Column(db.Integer,primary_key=True)
-	ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['profile.email', 'profile.email','topics.topic_name'])
+	#ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['profile.email', 'profile.email','topics.topic_name'])
