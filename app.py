@@ -14,6 +14,7 @@ from models import *
 @app.route("/")
 def ping():
 	return "ping resp"
+
 #register and login
 @app.route("/register",methods=['POST'])
 def register():
@@ -28,13 +29,12 @@ def register():
 	print(password_)
 	try:
 		credentials = Credentials(email = email_, password = password_)
-		#db.session.add(credentials)
-		#db.session.commit()
+		db.session.add(credentials)
+		db.session.commit()
 		profile = Profile(email = email_,name = name_,location = location_,gender = gender_,interest = interest_,college = college_)
-		db.session.add(profile,credentials)
+		db.session.add(profile)
 		db.session.commit()
 		return"ok"
-		
 	except Exception as e:
 		return str(e)
 

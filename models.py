@@ -8,9 +8,6 @@ class Credentials(db.Model):
 	password = db.Column(db.String())
 	def __repr__(self):
 		return '<Email %r>' % self.email
-	def __init__(self, email, password):
-		self.email = email
-		self.password = password
 
 class Profile(db.Model):
 	__tablename__ = 'profile'
@@ -23,13 +20,6 @@ class Profile(db.Model):
 	#mentors = relationship("Mentor_list"))
 	#enroll = relationship("Enrollment"))
 	#notifs = relationship("Notification"))
-	def __init__(self, email,password):
-		self.email= email
-		self.college = college
-		self.interest = interest
-		self.gender = gender
-		self.location = location
-		self.name = name
 
 	def __repr__(self):
 		return '<Email %r>' % self.email
