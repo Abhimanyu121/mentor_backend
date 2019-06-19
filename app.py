@@ -69,19 +69,19 @@ def enroll():
 			notif = Notification(
 					mentee = email,
 					mentor = request.form['mentor'],
-					status = False,
+					request = False,
 					topic_name = request.form['topic_name']
 				)
 			db.session.add(enrollment)
 			db.session.commit()
 			db.session.add(notif)
 			db.session.commit()
-			return True
+			return "Ture"
 		else:
-			return False
+			return "False"
 	except Exception as e:
 		print(str(e))
-		return False
+		return "False"
 @app.route("/add_timeline", methods=['POST'])
 def add_timeline():
 	email = request.form['email']

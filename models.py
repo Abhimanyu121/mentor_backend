@@ -6,12 +6,7 @@ class Credentials(db.Model):
 	__tablename__ = 'credentials'
 	email = db.Column(db.String(),primary_key=True)
 	password = db.Column(db.String())
-	def __repr__(self):
-		return '<Email %r>' % self.email
-	def __init__(self, email, password):
-		self.email = email
-		self.password = password
-
+	
 class User_Profile(db.Model):
 	__tablename__ = 'user_profile'
 	email = db.Column(db.String(), primary_key = True)
@@ -20,19 +15,7 @@ class User_Profile(db.Model):
 	gender = db.Column(db.String())
 	location = db.Column(db.String())
 	name = db.Column(db.String())
-	#mentors = relationship("Mentor_list"))
-	#enroll = relationship("Enrollment"))
-	#notifs = relationship("Notification"))
-	#def __init__(self, email,password):
-	#	self.email= email
-	#	self.college = college
-	#	self.interest = interest
-	#	self.gender = gender
-	#	self.location = location
-	#	self.name = name
 
-	#def __repr__(self):
-	#	return '<Email %r>' % self.email
 
 
 
@@ -61,7 +44,7 @@ class Timeline(db.Model):
 
 class Enrollment(db.Model):
 	__tablename__ = 'enrollment'
-	id = db.Column(db.Integer, primary_key = True)
+	id = db.Column(db.Integer, primary_key = True,autoincrement=True)
 	topic_name = db.Column(db.String())
 	mentor = db.Column(db.String())
 	mentee = db.Column(db.String())
@@ -69,10 +52,9 @@ class Enrollment(db.Model):
 	#ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['profile.email', 'profile.email','topics.topic_name'])
 class Notification(db.Model):
 	__tablename__ = 'notification'
-	id = db.Column(db.Integer, primary_key = True)
+	id = db.Column(db.Integer, primary_key = True, autoincrement=True)
 	topic_name = db.Column(db.String())
 	mentee = db.Column(db.String())
 	mentor = db.Column(db.String())
 	request = db.Column(db.Boolean)
-	number = db.Column(db.Integer,primary_key=True)
 	#ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['profile.email', 'profile.email','topics.topic_name'])
