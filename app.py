@@ -27,10 +27,10 @@ def register():
 	print(email_)
 	print(password_)
 	try:
-		#credentials = Credentials(email = email_, password = password_)
-		#db.session.add(credentials)
-		#db.session.commit()
-		profile = Profile(email = email_,name = name_,location = location_,gender = gender_,interest = interest_,college = college_)
+		credentials = Credentials(email = email_, password = password_)
+		db.session.add(credentials)
+		db.session.commit()
+		profile = User_Profile(email = email_,name = name_,location = location_,gender = gender_,interest = interest_,college = college_)
 		db.session.add(profile)
 		db.session.commit()
 		return"ok"
