@@ -82,7 +82,7 @@ def enroll():
 	except Exception as e:
 		print(str(e))
 		return False
-@app.route("/add_timeline")
+@app.route("/add_timeline", methods=['POST'])
 def add_timeline():
 	email = request.form['email']
 	password = request.form['password']
@@ -90,18 +90,18 @@ def add_timeline():
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
 			timeline = Timeline(
-					name = request.form['name'],
+					topic_name = request.form['topic_name'],
 					day = request.form['day'],
 					goal = request.form['goal']
 				)
 			db.session.add(timeline)
 			db.session.commit()
-			return True
+			return 'True'
 		else:
-			return False
+			return 'False'
 	except Exception as e:
 		print(str(e))
-		return False
+		return 'False'
 @app.route("/add_mentor", methods=['POST'])
 def add_mentor():
 	email = request.form['email']
