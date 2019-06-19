@@ -59,3 +59,8 @@ class Notification(db.Model):
 	request = db.Column(db.Boolean)
 	number = db.Column(db.Integer,primary_key=True)
 	#ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['profile.email', 'profile.email','topics.topic_name'])
+class New_requests(db.Model):
+	__tablename__='request_list'
+	topic_name = db.Column(db.String())
+	id = db.Column(db.Integer,primary_key=True)
+	requester = db.Column(db.String())

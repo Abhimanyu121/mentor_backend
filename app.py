@@ -140,6 +140,24 @@ def new_topic():
 	except Exception as e:
 		print(str(e))
 		return "False"
+@app.route("/add_request", methods=['POST'])
+def new_request():
+	email = request.form['email']
+	password = request.form['password']
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			req = New_requests(
+					topic_name = request.form['topic_name'],
+					requester =  email
+				)
+			db.session.add(req)
+			db.session.commit()
+			return "True"
+		else:
+			return "False"
+	except Exception as e:
+		return(str(e))
 #getter functions
 
 @app.route("/profile")
@@ -299,7 +317,7 @@ def get_mentors():
 		print(str(e))
 		return str(e)
 
-# change status, get request list ,request list
+# change status, get request list ,add request, remove request
 migrate = Migrate(app, db)
 if __name__ == '__main__':
 	app.run()
