@@ -183,8 +183,26 @@ def pick_request():
 	except Exception as e:
 		print(str(e))
 		return str(e)
+@app.route("/change_status", methods=['POST'])
+def change_status():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			data = Enrollment.query.filter_by(mentee =request.form['mentee'] ).filter_by(mentor = email).filter_by(topic_name=request.form['topic_name']).first()
+			print(str(data.status))
+			data.status+=1
+			db.session.commit()
+			return "added"
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
 
-#getter functions
+#getter functions____________________________________________________________________________________________________________________
 
 @app.route("/profile")
 def profile():
