@@ -158,6 +158,32 @@ def new_request():
 			return "False"
 	except Exception as e:
 		return(str(e))
+@app.route("/pick_request", methods=['POST'])
+def pick_request():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			mentor = Mentor_list(
+					topic_name = request.form['topic_name'],
+					email = request.form['email']
+				)
+			db.session.add(mentor)
+			topic = Topics(
+					topic_name = request.form['topic_name']
+				)
+			db.session.add(topic)
+			New_requests.query.filter_by(topic_name=request.form['topic_name']).delete()
+			db.session.commit()
+			return "added"
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
+
 #getter functions
 
 @app.route("/profile")
@@ -338,7 +364,7 @@ def get_request_list():
 		print(str(e))
 		return str(e)
 
-# change status, get request list , remove request
+# change status 
 migrate = Migrate(app, db)
 if __name__ == '__main__':
 	app.run()
