@@ -63,7 +63,7 @@ def enroll():
 			enrollment = Enrollment(
 					mentee = email,
 					mentor = request.form['mentor'],
-					status = False,
+					status = 1,
 					topic_name = request.form['topic_name']
 				)
 			notif = Notification(
