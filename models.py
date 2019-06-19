@@ -40,6 +40,7 @@ class Timeline(db.Model):
 	topic_name = db.Column(db.String())
 	day = db.Column(db.String())
 	goal = db.Column(db.String())
+	mentor = db.Column(db.String())
 	#ForeignKeyConstraint(['name'], ['topics.topic_name'])
 
 class Enrollment(db.Model):
@@ -52,9 +53,9 @@ class Enrollment(db.Model):
 	#ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['profile.email', 'profile.email','topics.topic_name'])
 class Notification(db.Model):
 	__tablename__ = 'notification'
-	id = db.Column(db.Integer, primary_key = True, autoincrement=True)
 	topic_name = db.Column(db.String())
 	mentee = db.Column(db.String())
 	mentor = db.Column(db.String())
 	request = db.Column(db.Boolean)
+	number = db.Column(db.Integer,primary_key=True)
 	#ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['profile.email', 'profile.email','topics.topic_name'])

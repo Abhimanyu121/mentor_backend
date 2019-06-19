@@ -92,7 +92,8 @@ def add_timeline():
 			timeline = Timeline(
 					topic_name = request.form['topic_name'],
 					day = request.form['day'],
-					goal = request.form['goal']
+					goal = request.form['goal'],
+					mentor = request.form['email']
 				)
 			db.session.add(timeline)
 			db.session.commit()
@@ -186,6 +187,74 @@ def topic_list():
 	except Exception as e:
 		print(str(e))
 		return str(e)
+@app.route("/get_mentor_details")
+def mentor_details():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			details = Enrollment.query.filter_by(mentor= email).all()
+			print(str(details))
+			detail_list={}
+			i=0
+			for detail in details:
+				print(str(detail))
+				detail_list.update({str(i):{"mentee":str(detail.mentee),"topic":str(detail.topic_name),"status":str(detail.status)}})
+				i+=1
+			return jsonify(detail_list)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
+@app.route("/get_mentee_details")
+def mentee_details():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			details = Enrollment.query.filter_by(mentee= email).all()
+			print(str(details))
+			detail_list={}
+			i=0
+			for detail in details:
+				print(str(detail))
+				detail_list.update({str(i):{"mentee":str(detail.mentor),"topic":str(detail.topic_name),"status":str(detail.status)}})
+				i+=1
+			return jsonify(detail_list)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
+
+@app.route("/get_timeline")
+def get_timeline():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			details = Timeline.query.filter_by(mentor= request.form['mentor']).filter_by(topic_name =request.form['topic_name'] ).all()
+			print(str(details))
+			detail_list={}
+			i=0
+			for detail in details:
+				print(str(detail))
+				detail_list.update({str(i):{"day":str(detail.day),"goal":str(detail.goal),"topic":str(detail.topic_name)}})
+				i+=1
+			return jsonify(detail_list)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
+#get timeline, change status, get mentorlist, get notification list, get request list ,request list
 migrate = Migrate(app, db)
 if __name__ == '__main__':
 	app.run()

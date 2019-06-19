@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f86e8ba0200a
+Revision ID: e6b886b8464f
 Revises: 
-Create Date: 2019-06-19 15:39:07.516801
+Create Date: 2019-06-19 18:24:07.993632
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f86e8ba0200a'
+revision = 'e6b886b8464f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -38,18 +38,19 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('notification',
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('topic_name', sa.String(), nullable=True),
     sa.Column('mentee', sa.String(), nullable=True),
     sa.Column('mentor', sa.String(), nullable=True),
     sa.Column('request', sa.Boolean(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('number', sa.Integer(), nullable=False),
+    sa.PrimaryKeyConstraint('number')
     )
     op.create_table('timeline',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('topic_name', sa.String(), nullable=True),
     sa.Column('day', sa.String(), nullable=True),
     sa.Column('goal', sa.String(), nullable=True),
+    sa.Column('mentor', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('topics',
