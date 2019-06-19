@@ -165,6 +165,27 @@ def profile():
 	except Exception as e:
 		print(str(e))
 		return str(e)
+@app.route("/get_topics")
+def topic_list():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			topics = Topics.query.all()
+			topic_list={}
+			i=0
+			for topic in topics:
+				print(str(topic.topic_name))
+				topic_list.update({str(i):str(topic.topic_name)})
+				i+=1
+			return jsonify(topic_list)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
 migrate = Migrate(app, db)
 if __name__ == '__main__':
 	app.run()
