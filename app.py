@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 
@@ -149,7 +149,7 @@ def profile():
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
-			profile = Profile.query.filter_by(email = email).first()
+			profile = User_Profile.query.filter_by(email = email).first()
 			print(str(profile))
 			dict={
 					"email": str(profile.email),
