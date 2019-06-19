@@ -316,8 +316,29 @@ def get_mentors():
 	except Exception as e:
 		print(str(e))
 		return str(e)
+@app.route("/get_requests")
+def get_request_list():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			reqs = New_requests.query.all()
+			topic_list={}
+			i=0
+			for topic in reqs:
+				print(str(topic.topic_name))
+				topic_list.update({str(i):{"topic":str(topic.topic_name),"requester":str(topic.requester)}})
+				i+=1
+			return jsonify(topic_list)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
 
-# change status, get request list ,add request, remove request
+# change status, get request list , remove request
 migrate = Migrate(app, db)
 if __name__ == '__main__':
 	app.run()
