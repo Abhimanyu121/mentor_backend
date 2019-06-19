@@ -276,7 +276,30 @@ def get_notifications():
 	except Exception as e:
 		print(str(e))
 		return str(e)
-# change status, get mentorlist, get notification list, get request list ,request list
+@app.route("/get_mentors")
+def get_mentors():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			details = Mentor_list.query.all()
+			print(str(details))
+			detail_list={}
+			i=0
+			for detail in details:
+				print(str(detail))
+				detail_list.update({str(i):{"mentor":str(detail.email),"topic_name":str(detail.topic_name)}})
+				i+=1
+			return jsonify(detail_list)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
+
+# change status, get request list ,request list
 migrate = Migrate(app, db)
 if __name__ == '__main__':
 	app.run()
