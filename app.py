@@ -67,8 +67,8 @@ def enroll():
 					topic_name = request.form['topic_name']
 				)
 			notif = Notification(
-					mentee = email,
-					mentor = request.form['mentor'],
+					sender = email,
+					recipient = request.form['mentor'],
 					request = False,
 					topic_name = request.form['topic_name']
 				)
@@ -254,7 +254,29 @@ def get_timeline():
 	except Exception as e:
 		print(str(e))
 		return str(e)
-#get timeline, change status, get mentorlist, get notification list, get request list ,request list
+@app.route("/get_notifications")
+def get_notifications():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			details = Notification.query.filter_by(recipient= request.form['email']).all()
+			print(str(details))
+			detail_list={}
+			i=0
+			for detail in details:
+				print(str(detail))
+				detail_list.update({str(i):{"sender":str(detail.sender),"details":str(detail.topic_name)}})
+				i+=1
+			return jsonify(detail_list)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
+# change status, get mentorlist, get notification list, get request list ,request list
 migrate = Migrate(app, db)
 if __name__ == '__main__':
 	app.run()

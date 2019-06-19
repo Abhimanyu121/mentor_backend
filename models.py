@@ -54,8 +54,8 @@ class Enrollment(db.Model):
 class Notification(db.Model):
 	__tablename__ = 'notification'
 	topic_name = db.Column(db.String())
-	mentee = db.Column(db.String())
-	mentor = db.Column(db.String())
+	sender = db.Column(db.String())#sender
+	recipient = db.Column(db.String())#recipient
 	request = db.Column(db.Boolean)
 	number = db.Column(db.Integer,primary_key=True)
 	#ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['profile.email', 'profile.email','topics.topic_name'])
