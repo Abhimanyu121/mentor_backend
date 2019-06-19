@@ -102,25 +102,25 @@ def add_timeline():
 	except Exception as e:
 		print(str(e))
 		return False
-@app.route("/add_mentor")
+@app.route("/add_mentor", methods=['POST'])
 def add_mentor():
 	email = request.form['email']
 	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
-		if password == credentials['password']:
-			mentor = Mentor(
-					name = request.form['name'],
+		if password == str(credentials.password):
+			mentor = Mentor_list(
+					topic_name = request.form['topic_name'],
 					email = request.form['email']
 				)
 			db.session.add(mentor)
 			db.session.commit()
-			return True
+			return 'True'
 		else:
-			return False
+			return 'False'
 	except Exception as e:
 		print(str(e))
-		return False
+		return 'False'
 @app.route("/add_topics", methods=['POST'])
 def new_topic():
 	email = request.form['email']
