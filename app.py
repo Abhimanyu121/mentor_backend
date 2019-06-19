@@ -53,7 +53,7 @@ def login():
 		return "False"
 #setter functions
 
-@app.route("/enroll")
+@app.route("/enroll", methods=['POST'])
 def enroll():
 	email = request.form['email']
 	password = request.form['password']
@@ -121,24 +121,24 @@ def add_mentor():
 	except Exception as e:
 		print(str(e))
 		return False
-@app.route("/add_topics")
+@app.route("/add_topics", methods=['POST'])
 def new_topic():
 	email = request.form['email']
 	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
-			topic = Topic(
-					name = request.form['name']
+			topic = Topics(
+					topic_name = request.form['topic_name']
 				)
-			db.session.add(mentor)
+			db.session.add(topic)
 			db.session.commit()
-			return True
+			return "True"
 		else:
-			return False
+			return "False"
 	except Exception as e:
 		print(str(e))
-		return False
+		return "False"
 #getter functions
 
 @app.route("/profile")
