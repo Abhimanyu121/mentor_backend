@@ -44,13 +44,13 @@ def login():
 	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
-		if password == credentials['password']:
-			return True
+		if password == str(credentials.password):
+			return "True"
 		else:
-			return False
+			return "False"
 	except Exception as e:
 		print(str(e))
-		return False
+		return "False"
 #setter functions
 
 @app.route("/enroll")
@@ -59,7 +59,7 @@ def enroll():
 	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
-		if password == credentials['password']:
+		if password == str(credentials.password):
 			enrollment = Enrollment(
 					mentee = email,
 					mentor = request.form['mentor'],
@@ -88,7 +88,7 @@ def add_timeline():
 	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
-		if password == credentials['password']:
+		if password == str(credentials.password):
 			timeline = Timeline(
 					name = request.form['name'],
 					day = request.form['day'],
@@ -127,7 +127,7 @@ def new_topic():
 	password = request.form['password']
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
-		if password == credentials.password:
+		if password == str(credentials.password):
 			topic = Topic(
 					name = request.form['name']
 				)
