@@ -33,30 +33,29 @@ class Topics(db.Model):
 class Mentor_list(db.Model):
 	__tablename__ = 'mentor_list'
 	id = db.Column(db.Integer, primary_key = True)
-	topic_name = db.Column(db.String())
-	email = db.Column(db.String())
-#	db.ForeignKeyConstraint(['email', 'topic_name'], ['user_profile.email', 'topics.topic_name'])
+	topic_name = db.Column(db.String(), db.ForeignKey('topics.topic_name'))
+	email = db.Column(db.String(), db.ForeignKey('user_profile.email'))
 
 class Timeline(db.Model):
 	__tablename__ = 'timeline'
 	id = db.Column(db.Integer, primary_key = True)
-	topic_name = db.Column(db.String())
+	topic_name = db.Column(db.String(),db.ForeignKey('topics.topic_name'))
 	day = db.Column(db.String())
 	goal = db.Column(db.String())
-	mentor = db.Column(db.String())
+	mentor = db.Column(db.String(),db.ForeignKey('user_profile.email'))
 #	db.ForeignKeyConstraint(['name','mentor'], ['topics.topic_name','user_profile.email'])
 
 class Enrollment(db.Model):
 	__tablename__ = 'enrollment'
 	id = db.Column(db.Integer, primary_key = True,autoincrement=True)
-	topic_name = db.Column(db.String())
-	mentor = db.Column(db.String())
-	mentee = db.Column(db.String())
+	topic_name = db.Column(db.String(),db.ForeignKey('topics.topic_name'))
+	mentor = db.Column(db.String(),db.ForeignKey('user_profile.email'))
+	mentee = db.Column(db.String(),db.ForeignKey('user_profile.email'))
 	status = db.Column(db.Integer)#1=requested 2=stuff going on 3 = stuff over
 #	db.ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['user_profile.email', 'user_profile.email','topics.topic_name'])
 class Notification(db.Model):
 	__tablename__ = 'notification'
-	topic_name = db.Column(db.String())
+	topic_name = db.Column(db.String(),db.ForeignKey('topics.topic_name'))
 	sender = db.Column(db.String())#sender
 	recipient = db.Column(db.String())#recipient
 	request = db.Column(db.Boolean)
