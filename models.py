@@ -1,3 +1,4 @@
+import os
 from app import db
 from sqlalchemy import Table, Column, Integer, ForeignKeyConstraint
 from sqlalchemy.orm import relationship
