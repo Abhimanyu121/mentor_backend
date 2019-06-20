@@ -132,7 +132,7 @@ def new_topic():
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
 			user = User_Profile.query.filter_by(email = email).first()
-			if user.mentor == True
+			if user.mentor:
 				topic = Topics(
 					topic_name = request.form['topic_name']
 				)
@@ -201,6 +201,30 @@ def change_status():
 			print(str(data.status))
 			data.status+=1
 			db.session.commit()
+			return "added"
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
+@app.route("/notification_status", methods=['POST'])
+def notification_status():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			data = Notification.query.filter_by(sender =request.form['sender'] ).filter_by(recipient = email).filter_by(topic_name=request.form['topic_name']).first()
+			print(str(data.request))
+			data.request=True
+			db.session.commit()
+			notif = Notification(
+					sender = email,
+					recipient = request.form['sender'],
+					request = True,
+					topic_name = request.form['topic_name']
+				)
 			return "added"
 		else:
 			return "failed"
