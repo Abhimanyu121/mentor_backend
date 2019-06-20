@@ -15,6 +15,7 @@ class User_Profile(db.Model):
 	gender = db.Column(db.String())
 	location = db.Column(db.String())
 	name = db.Column(db.String())
+	mentor = db.Column(db.Boolean)
 #	mentors = db.relationship("Mentor_list", backref="profile-mentor", lazy='dynamic')
 #	enroll = db.relationship("Enrollment", backref="profile-enroll", lazy='dynamic')
 #	notifs = db.relationship("Notification", backref="profile-notifs", lazy='dynamic')
@@ -56,8 +57,8 @@ class Enrollment(db.Model):
 class Notification(db.Model):
 	__tablename__ = 'notification'
 	topic_name = db.Column(db.String(),db.ForeignKey('topics.topic_name'))
-	sender = db.Column(db.String())#sender
-	recipient = db.Column(db.String())#recipient
+	sender = db.Column(db.String(),db.ForeignKey('user_profile.email'))#sender
+	recipient = db.Column(db.String(),db.ForeignKey('user_profile.email'))#recipient
 	request = db.Column(db.Boolean)
 	number = db.Column(db.Integer,primary_key=True)
 #	db.ForeignKeyConstraint(['mentor', 'mentee', ' topic_name'], ['user_profile.email', 'user_profile.email','topics.topic_name'])
@@ -65,4 +66,4 @@ class New_requests(db.Model):
 	__tablename__='request_list'
 	topic_name = db.Column(db.String())
 	id = db.Column(db.Integer,primary_key=True)
-	requester = db.Column(db.String())
+	requester = db.Column(db.String(),db.ForeignKey('user_profile.email'))

@@ -30,7 +30,7 @@ def register():
 		credentials = Credentials(email = email_, password = password_)
 		db.session.add(credentials)
 		db.session.commit()
-		profile = User_Profile(email = email_,name = name_,location = location_,gender = gender_,interest = interest_,college = college_)
+		profile = User_Profile(email = email_,name = name_,location = location_,gender = gender_,interest = interest_,college = college_,mentor = Fasle)
 		db.session.add(profile)
 		db.session.commit()
 		return"ok"
@@ -114,6 +114,8 @@ def add_mentor():
 					topic_name = request.form['topic_name'],
 					email = request.form['email']
 				)
+			user = User_Profile.query.filter_by(email = email).first()
+			user.mentor=True
 			db.session.add(mentor)
 			db.session.commit()
 			return 'True'
@@ -129,12 +131,16 @@ def new_topic():
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
-			topic = Topics(
+			user = User_Profile.query.filter_by(email = email).first()
+			if user.mentor == True
+				topic = Topics(
 					topic_name = request.form['topic_name']
 				)
-			db.session.add(topic)
-			db.session.commit()
-			return "True"
+				db.session.add(topic)
+				db.session.commit()
+				return "True"
+			else :
+				return "you are not a mentor"
 		else:
 			return "False"
 	except Exception as e:
