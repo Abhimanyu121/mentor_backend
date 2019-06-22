@@ -25,13 +25,14 @@ def register():
 	gender_ = request.form['gender']
 	interest_ = request.form['interest']
 	college_ = request.form['college']
+	number = request.form['number']
 	print(email_)
 	print(password_)
 	try:
 		credentials = Credentials(email = email_, password = password_)
 		db.session.add(credentials)
 		db.session.commit()
-		profile = User_Profile(email = email_,name = name_,location = location_,gender = gender_,interest = interest_,college = college_,mentor = Fasle)
+		profile = User_Profile(email = email_,name = name_,location = location_,gender = gender_,interest = interest_,college = college_,mentor = Fasle, number = number)
 		db.session.add(profile)
 		db.session.commit()
 		return"ok"
@@ -251,7 +252,8 @@ def profile():
 					"interest": str(profile.interest),
 					"location": str(profile.location),
 					"gender" :str(profile.gender),
-					"college": str(profile.college)
+					"college": str(profile.college),
+					"number": str(profile.number)
 				}
 			return jsonify(dict)
 		else:

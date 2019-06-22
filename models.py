@@ -17,6 +17,7 @@ class User_Profile(db.Model):
 	location = db.Column(db.String())
 	name = db.Column(db.String())
 	mentor = db.Column(db.Boolean)
+	number = db.Column(db.String())
 #	mentors = db.relationship("Mentor_list", backref="profile-mentor", lazy='dynamic')
 #	enroll = db.relationship("Enrollment", backref="profile-enroll", lazy='dynamic')
 #	notifs = db.relationship("Notification", backref="profile-notifs", lazy='dynamic')
