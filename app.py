@@ -32,7 +32,7 @@ def register():
 		credentials = Credentials(email = email_, password = password_)
 		db.session.add(credentials)
 		db.session.commit()
-		profile = User_Profile(email = email_,name = name_,location = location_,gender = gender_,interest = interest_,college = college_,mentor = Fasle, number = number)
+		profile = User_Profile(email = email_,name = name_,location = location_,gender = gender_,interest = interest_,college = college_,mentor = False, number = number)
 		db.session.add(profile)
 		db.session.commit()
 		return"ok"
