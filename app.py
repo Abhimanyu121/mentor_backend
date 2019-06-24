@@ -52,7 +52,7 @@ def login():
 			return "False"
 	except Exception as e:
 		print(str(e))
-		return "False"
+		return ste(e)
 #setter functions
 
 @app.route("/enroll", methods=['POST'])
