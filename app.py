@@ -40,7 +40,7 @@ def register():
 	except Exception as e:
 		return str(e)
 
-@app.route("/login")
+@app.route("/login",methods=['POST'])
 def login():
 	email = request.form['email']
 	password = request.form['password']
@@ -236,7 +236,7 @@ def notification_status():
 
 #getter functions____________________________________________________________________________________________________________________
 
-@app.route("/profile")
+@app.route("/profile",methods=['POST'])
 def profile():
 	email = request.form['email']
 	password = request.form['password']
@@ -261,7 +261,7 @@ def profile():
 	except Exception as e:
 		print(str(e))
 		return str(e)
-@app.route("/get_topics")
+@app.route("/get_topics",methods=['POST'])
 def topic_list():
 	email = request.form['email']
 	password = request.form['password']
@@ -282,7 +282,7 @@ def topic_list():
 	except Exception as e:
 		print(str(e))
 		return str(e)
-@app.route("/get_mentor_details")
+@app.route("/get_mentor_details",methods=['POST'])
 def mentor_details():
 	email = request.form['email']
 	password = request.form['password']
@@ -304,7 +304,7 @@ def mentor_details():
 	except Exception as e:
 		print(str(e))
 		return str(e)
-@app.route("/get_mentee_details")
+@app.route("/get_mentee_details",methods=['POST'])
 def mentee_details():
 	email = request.form['email']
 	password = request.form['password']
@@ -327,7 +327,7 @@ def mentee_details():
 		print(str(e))
 		return str(e)
 
-@app.route("/get_timeline")
+@app.route("/get_timeline",methods=['POST'])
 def get_timeline():
 	email = request.form['email']
 	password = request.form['password']
@@ -349,7 +349,7 @@ def get_timeline():
 	except Exception as e:
 		print(str(e))
 		return str(e)
-@app.route("/get_notifications")
+@app.route("/get_notifications",methods=['POST'])
 def get_notifications():
 	email = request.form['email']
 	password = request.form['password']
@@ -371,7 +371,7 @@ def get_notifications():
 	except Exception as e:
 		print(str(e))
 		return str(e)
-@app.route("/get_mentors")
+@app.route("/get_mentors",methods=['POST'])
 def get_mentors():
 	email = request.form['email']
 	password = request.form['password']
@@ -393,7 +393,7 @@ def get_mentors():
 	except Exception as e:
 		print(str(e))
 		return str(e)
-@app.route("/get_requests")
+@app.route("/get_requests",methods=['POST'])
 def get_request_list():
 	email = request.form['email']
 	password = request.form['password']
