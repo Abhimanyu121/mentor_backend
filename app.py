@@ -116,6 +116,7 @@ def add_mentor():
 					topic_name = request.form['topic_name']
 				)
 				db.session.add(topic)
+				db.session.commit()
 			mentor = Mentor_list(
 					topic_name = request.form['topic_name'],
 					email = request.form['email']
