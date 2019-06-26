@@ -112,6 +112,10 @@ def add_mentor():
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
+			topic = Topics(
+					topic_name = request.form['topic_name']
+				)
+				db.session.add(topic)
 			mentor = Mentor_list(
 					topic_name = request.form['topic_name'],
 					email = request.form['email']
@@ -253,7 +257,8 @@ def profile():
 					"location": str(profile.location),
 					"gender" :str(profile.gender),
 					"college": str(profile.college),
-					"number": str(profile.number)
+					"number": str(profile.number),
+					"mentor":str(profile.mentor)
 				}
 			return jsonify(dict)
 		else:
