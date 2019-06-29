@@ -64,19 +64,20 @@ def enroll():
 		if password == str(credentials.password):
 			enrollment = Enrollment(
 					mentee = email,
-					mentor = request.form['mentor'],
+					mentor = None,
 					status = 1,
 					topic_name = request.form['topic_name']
 				)
-			notif = Notification(
-					sender = email,
-					recipient = request.form['mentor'],
-					request = False,
-					topic_name = request.form['topic_name']
-				)
+			mList= Mentor_list.query.filter_by(topic_name=request.form['topic_name']).all()
+			for name in mList:
+				notif = Notification(
+						sender = email,
+						recipient = name.email,
+						request = False,
+						topic_name = request.form['topic_name']
+					)
+				db.session.add(notif)
 			db.session.add(enrollment)
-			db.session.commit()
-			db.session.add(notif)
 			db.session.commit()
 			return "Ture"
 		else:
