@@ -241,7 +241,7 @@ def notification_status():
 
 #getter functions____________________________________________________________________________________________________________________
 @app.route("/enrollment_status", methods=['POST'])
-def enrollment_status:
+def enrollment_status():
 	email = request.form['email']
 	password = request.form['password']
 	try:
@@ -251,7 +251,7 @@ def enrollment_status:
 			if(detail.mentor == None):
 				return "False"
 			else :
-				return "True"
+				return str(detail.mentor)
 	except Exception as e:
 		print(str(e))
 		return str(e)
