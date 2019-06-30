@@ -248,6 +248,7 @@ def enrollment_status():
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
 			detail = Enrollment.query.filter_by(mentee = email).filter_by(topic_name = request.form['topic_name']).first();
+			print(detail)
 			if(detail.mentor == None):
 				return "False"
 			else :
