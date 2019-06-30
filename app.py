@@ -79,7 +79,7 @@ def enroll():
 				db.session.add(notif)
 			db.session.add(enrollment)
 			db.session.commit()
-			return "Ture"
+			return "True"
 		else:
 			return "False"
 	except Exception as e:
