@@ -240,7 +240,21 @@ def notification_status():
 		return str(e)
 
 #getter functions____________________________________________________________________________________________________________________
-
+@app.route("/enrollment_status", methods=['POST'])
+def enrollment_status:
+	email = request.form['email']
+	password = request.form['password']
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			detail = Enrollment.query.filter_by(email = email).all().filter_by(topic_name = request.form['topic_name']).first();
+			if(detail.mentor == None):
+				return "False"
+			else :
+				return "True"
+	except Exception as e:
+		print(str(e))
+		return str(e)
 @app.route("/profile",methods=['POST'])
 def profile():
 	email = request.form['email']
