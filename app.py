@@ -435,6 +435,27 @@ def get_request_list():
 	except Exception as e:
 		print(str(e))
 		return str(e)
+@app.route("/getspMentor")
+def spMentor():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			mentors = Enrollment.query.filter_by(mentee = email).all()
+			mentor_list={}
+			i=0
+			for mentor in mentors:
+				print(str(mentor.email))
+				topic_list.update({str(i):{"topic":str(mentor.mentor)}})
+				i+=1
+			return jsonify(topic_list)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
 
 # change status 
 migrate = Migrate(app, db)
