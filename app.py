@@ -282,6 +282,32 @@ def profile():
 	except Exception as e:
 		print(str(e))
 		return str(e)
+@app.route("/diffprofile",methods=['POST'])
+def diffprofile():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			profile = User_Profile.query.filter_by(email = request.form['new_email']).first()
+			print(str(profile))
+			dict={
+					"email": str(profile.email),
+					"name": str(profile.name),
+					"interest": str(profile.interest),
+					"location": str(profile.location),
+					"gender" :str(profile.gender),
+					"college": str(profile.college),
+					"number": str(profile.number),
+					"mentor":str(profile.mentor)
+				}
+			return jsonify(dict)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
 @app.route("/get_topics",methods=['POST'])
 def topic_list():
 	email = request.form['email']
@@ -356,7 +382,7 @@ def get_timeline():
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
-			details = Timeline.query.filter_by(mentor= request.form['mentor']).filter_by(topic_name =request.form['topic_name'] ).all()
+			details = Timeline.query.filter_by(topic_name =request.form['topic_name'] ).all()
 			print(str(details))
 			detail_list={}
 			i=0
@@ -448,7 +474,7 @@ def spMentor():
 			i=0
 			for mentor in mentors:
 				print(str(mentor.email))
-				topic_list.update({str(i):{"topic":str(mentor.mentor)}})
+				topic_list.update({str(i):{"mentor":str(mentor.mentor),"topic":str(mentor.topic)}})
 				i+=1
 			return jsonify(topic_list)
 		else:
