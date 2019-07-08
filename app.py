@@ -205,9 +205,10 @@ def change_status():
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
-			data = Enrollment.query.filter_by(mentee =request.form['mentee'] ).filter_by(mentor = email).filter_by(topic_name=request.form['topic_name']).first()
+			data = Enrollment.query.filter_by(mentee =request.form['mentee'] ).filter_by(topic_name=request.form['topic_name']).first()
 			print(str(data.status))
 			data.status+=1
+			data.mentor=email
 			db.session.commit()
 			return "added"
 		else:
