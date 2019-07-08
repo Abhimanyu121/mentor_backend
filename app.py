@@ -81,6 +81,7 @@ def enroll():
 			db.session.commit()
 			return "True"
 		else:
+			print("no exception fail")
 			return "False"
 	except Exception as e:
 		print(str(e))
