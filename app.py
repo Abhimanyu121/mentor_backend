@@ -471,7 +471,7 @@ def spMentor():
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
-			mentors = Enrollment.query.filter_by(mentee = email).all()
+			mentors = Enrollment.query.filter_by(mentee = email).filter_by(mentor !=None).all()
 			mentor_list={}
 			i=0
 			for mentor in mentors:
