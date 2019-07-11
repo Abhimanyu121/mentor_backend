@@ -476,7 +476,7 @@ def spMentor():
 			i=0
 			for mentor in mentors:
 				print(str(mentor.mentor))
-				mentor_list.update({str(i):{"mentor":str(mentor.mentor),"topic":str(mentor.topic)}})
+				mentor_list.update({str(i):{"mentor":str(mentor.mentor),"topic":str(mentor.topic_name)}})
 				i+=1
 			return jsonify(mentor_list)
 		else:
