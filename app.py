@@ -463,7 +463,7 @@ def get_request_list():
 	except Exception as e:
 		print(str(e))
 		return str(e)
-@app.route("/getspMentor")
+@app.route("/getspMentor",,methods=['POST'])
 def spMentor():
 	email = request.form['email']
 	password = request.form['password']
