@@ -476,9 +476,9 @@ def spMentor():
 			i=0
 			for mentor in mentors:
 				print(str(mentor.mentor))
-				topic_list.add({str(i):{"mentor":str(mentor.mentor),"topic":str(mentor.topic)}})
+				mentor_list.update({str(i):{"mentor":str(mentor.mentor),"topic":str(mentor.topic)}})
 				i+=1
-			return jsonify(topic_list)
+			return jsonify(mentor_list)
 		else:
 			return "failed"
 	except Exception as e:
