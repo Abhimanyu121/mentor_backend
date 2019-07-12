@@ -420,6 +420,28 @@ def get_notifications():
 	except Exception as e:
 		print(str(e))
 		return str(e)
+@app.route("/get_applied",methods=['POST'])
+def get_applied():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			details = ENrollment.query.filter_by(mentee = email).all()
+			print(str(details))
+			detail_list={}
+			i=0
+			for detail in details:
+				print(str(detail))
+				detail_list.update({str(i):{"topic_name":str(detail.topic_name)}})
+				i+=1
+			return jsonify(detail_list)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
 @app.route("/get_mentors",methods=['POST'])
 def get_mentors():
 	email = request.form['email']
