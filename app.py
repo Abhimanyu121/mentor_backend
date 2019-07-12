@@ -428,7 +428,7 @@ def get_applied():
 	try:
 		credentials=Credentials.query.filter_by(email = email).first()
 		if password == str(credentials.password):
-			details = ENrollment.query.filter_by(mentee = email).all()
+			details = Enrollment.query.filter_by(mentee = email).all()
 			print(str(details))
 			detail_list={}
 			i=0
