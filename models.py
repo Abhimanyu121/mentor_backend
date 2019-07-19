@@ -45,6 +45,7 @@ class Timeline(db.Model):
 	topic_name = db.Column(db.String(),db.ForeignKey('topics.topic_name'))
 	day = db.Column(db.String())
 	goal = db.Column(db.String())
+	link = db.Column(db.String())
 	mentor = db.Column(db.String(),db.ForeignKey('user_profile.email'))
 #	db.ForeignKeyConstraint(['name','mentor'], ['topics.topic_name','user_profile.email'])
 
