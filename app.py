@@ -97,7 +97,8 @@ def add_timeline():
 					topic_name = request.form['topic_name'],
 					day = request.form['day'],
 					goal = request.form['goal'],
-					mentor = request.form['email']
+					mentor = request.form['email'],
+					link = request.form['link']
 				)
 			db.session.add(timeline)
 			db.session.commit()
@@ -390,7 +391,7 @@ def get_timeline():
 			i=0
 			for detail in details:
 				print(str(detail))
-				detail_list.update({str(i):{"day":str(detail.day),"goal":str(detail.goal),"topic":str(detail.topic_name)}})
+				detail_list.update({str(i):{"day":str(detail.day),"goal":str(detail.goal),"topic":str(detail.topic_name),"link":str(detail.link)}})
 				i+=1
 			return jsonify(detail_list)
 		else:
