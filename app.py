@@ -399,6 +399,28 @@ def get_timeline():
 	except Exception as e:
 		print(str(e))
 		return str(e)
+@app.route("/get_timeline_sp",methods=['POST'])
+def get_timeline_sp():
+	email = request.form['email']
+	password = request.form['password']
+	print(email, password)
+	try:
+		credentials=Credentials.query.filter_by(email = email).first()
+		if password == str(credentials.password):
+			details = Timeline.query.filter_by(topic_name =request.form['topic_name'] ).filter_by(mentor= request.form['mentor']).all()
+			print(str(details))
+			detail_list={}
+			i=0
+			for detail in details:
+				print(str(detail))
+				detail_list.update({str(i):{"mentor":str(detail.mentor),"day":str(detail.day),"goal":str(detail.goal),"topic":str(detail.topic_name),"link":str(detail.link)}})
+				i+=1
+			return jsonify(detail_list)
+		else:
+			return "failed"
+	except Exception as e:
+		print(str(e))
+		return str(e)
 @app.route("/get_notifications",methods=['POST'])
 def get_notifications():
 	email = request.form['email']
