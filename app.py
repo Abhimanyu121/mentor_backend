@@ -391,7 +391,7 @@ def get_timeline():
 			i=0
 			for detail in details:
 				print(str(detail))
-				detail_list.update({str(i):{"day":str(detail.day),"goal":str(detail.goal),"topic":str(detail.topic_name),"link":str(detail.link)}})
+				detail_list.update({str(i):{"mentor":str(detail.mentor),"day":str(detail.day),"goal":str(detail.goal),"topic":str(detail.topic_name),"link":str(detail.link)}})
 				i+=1
 			return jsonify(detail_list)
 		else:
